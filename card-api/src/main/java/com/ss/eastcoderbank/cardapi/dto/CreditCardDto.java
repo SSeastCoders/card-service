@@ -1,11 +1,9 @@
 package com.ss.eastcoderbank.cardapi.dto;
 
-import com.ss.eastcoderbank.core.model.card.Card;
 import com.ss.eastcoderbank.core.model.card.CardType;
 import com.ss.eastcoderbank.core.model.user.User;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
