@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -33,10 +33,15 @@ public class CreditController {
         //return new ResponseEntity<>(creditService.getCreditCards(), HttpStatus.OK);
     }
 
-    @GetMapping()
-    public Page<CreditCardDto> getCreditCards(@RequestParam(name="page") Integer pageNumber, @RequestParam(name="size") Integer pageSize) {
-        return creditService.getCreditCards(pageNumber, pageSize);
+    @GetMapping("/dummy")
+    public ResponseEntity<String> dummy() {
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Dummy");
     }
+
+   // @GetMapping()
+    //public Page<CreditCardDto> getCreditCards(@RequestParam(name="page") Integer pageNumber, @RequestParam(name="size") Integer pageSize) {
+    //    return creditService.getCreditCards(pageNumber, pageSize);
+   // }
 
     //getCreditCardByUser
     @PostMapping(value = "/user")
@@ -56,7 +61,7 @@ public class CreditController {
     @PostMapping()
     public ResponseEntity<CreditCard> registration(@Valid @RequestBody CreateCreditDto card, HttpServletResponse response) {
         CreditCard creditCard = creditService.createCard(card);
-        response.addHeader("id", String.valueOf(creditCard.getId()));
+        //response.addHeader("id", String.valueOf(creditCard.getId()));
         return new ResponseEntity(creditCard, HttpStatus.CREATED);
     }
 

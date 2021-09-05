@@ -13,7 +13,7 @@ WORKDIR /app
 COPY --from=dependency /root/.m2 /root/.m2
 COPY --from=dependency /app /app
 COPY core-library/src /app/core-library/src
-COPY card-api/src /app/transaction-api/src
+COPY card-api/src /app/card-api/src
 RUN mvn clean install -DskipTests
 
 FROM openjdk:11-jdk

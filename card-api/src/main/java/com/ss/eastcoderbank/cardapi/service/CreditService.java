@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +23,15 @@ public class CreditService {
 
     private CreditRepository creditRepository;
     private UserRepository userRepository;
-
     private CardMapper cardMapper;
     private CreateCreditMapper createMapper;
+
+    public CreditService(CreditRepository creditRepository, UserRepository userRepository, CardMapper cardMapper, CreateCreditMapper createMapper) {
+        this.creditRepository = creditRepository;
+        this.userRepository = userRepository;
+        this.cardMapper = cardMapper;
+        this.createMapper = createMapper;
+    }
 
     public List<CreditCard> getCreditCards() {
         return creditRepository.findAll();
@@ -38,7 +43,7 @@ public class CreditService {
 
     public List<CreditCard> getCreditCardsByUser(List<Integer> users){
         List<User> cardUsers = users.stream().map(user -> (userRepository.findById(user)).orElseThrow(UserNotFoundException::new)).collect(Collectors.toList());
-        return creditRepository.findCreditCardsByUsers(cardUsers);
+        return creditRepository.findCreditCardsByUsersIn(cardUsers);
     }
 
     public CreditCard getCreditCardById(Integer id){
@@ -47,14 +52,18 @@ public class CreditService {
 
     public CreditCard createCard(CreateCreditDto card){
 
-
-
         CreditCard creditCard = createMapper.mapToEntity(card);
 
+        //-> nickname, users
+        List<User> cardUsers = card.getUsersIds().stream().map(user -> (userRepository.findById(user)).orElseThrow(UserNotFoundException::new)).collect(Collectors.toList());
+        creditCard.setUsers(cardUsers);
+
+        creditCard.DefaultCredit();
 
         try {
-           // userRepository.save(user);
-            //r/eturn user.getId();
+            creditRepository.save(creditCard);
+            return(creditCard);
+           //r/eturn user.getId();
         } catch (DataIntegrityViolationException e) {
             //Throwable t = e.getCause();
             //if (t instanceof ConstraintViolationException) {
