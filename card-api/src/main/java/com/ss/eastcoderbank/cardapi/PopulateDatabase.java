@@ -48,6 +48,7 @@ public class PopulateDatabase implements ApplicationRunner {
         user.setId(1);
         user.setEmail("hazel@smoothstack.com");
         user.setFirstName("hazel");
+        user.setLastName("isTheBest");
         Credential cred = new Credential();
         cred.setUsername("hazel");
         cred.setPassword("hazel");
