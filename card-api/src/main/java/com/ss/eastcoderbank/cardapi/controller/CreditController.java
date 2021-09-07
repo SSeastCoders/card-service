@@ -4,7 +4,6 @@ import com.ss.eastcoderbank.cardapi.dto.CreateCreditDto;
 import com.ss.eastcoderbank.cardapi.service.CreditService;
 import com.ss.eastcoderbank.core.model.card.CreditCard;
 import com.ss.eastcoderbank.core.transferdto.CreditCardDto;
-import com.ss.eastcoderbank.core.transferdto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,22 +25,21 @@ public class CreditController {
     private CreditService creditService;
 
     //getCreditCards()
-    @GetMapping()
-    public ResponseEntity<List<CreditCardDto>> getCreditCards() {
-        //???
-        return new ResponseEntity(creditService.getCreditCards(), HttpStatus.OK);
-        //return new ResponseEntity<>(creditService.getCreditCards(), HttpStatus.OK);
-    }
+   // @GetMapping()
+   // public ResponseEntity<List<CreditCardDto>> getCreditCards() {
+    //    return new ResponseEntity(creditService.getCreditCards(), HttpStatus.OK);
+    //}
 
     @GetMapping("/dummy")
     public ResponseEntity<String> dummy() {
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body("Dummy");
     }
 
-   // @GetMapping()
-    //public Page<CreditCardDto> getCreditCards(@RequestParam(name="page") Integer pageNumber, @RequestParam(name="size") Integer pageSize) {
-    //    return creditService.getCreditCards(pageNumber, pageSize);
-   // }
+    //getCreditCards()
+    @GetMapping()
+    public Page<CreditCardDto> getCreditCards(@RequestParam(name="page") Integer pageNumber, @RequestParam(name="size") Integer pageSize, @RequestParam(value="asc", required = false) boolean asc, Pageable page, String sort) {
+        return creditService.getCreditCards(pageNumber, pageSize, asc, sort);
+    }
 
     //getCreditCardByUser
     @PostMapping(value = "/user")
@@ -54,8 +52,6 @@ public class CreditController {
     public ResponseEntity<CreditCard> getCreditCard(@PathVariable Integer id) {
         return new ResponseEntity(creditService.getCreditCardById(id), HttpStatus.OK);
     }
-
-    //getCreditCardBy???
 
     //makenewcreditcard
     @PostMapping()
@@ -74,7 +70,5 @@ public class CreditController {
 
     //update card
 
-
-    //
 
 }

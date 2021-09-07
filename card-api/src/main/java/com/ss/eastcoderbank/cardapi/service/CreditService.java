@@ -9,10 +9,12 @@ import com.ss.eastcoderbank.core.model.user.User;
 import com.ss.eastcoderbank.core.repository.CreditRepository;
 import com.ss.eastcoderbank.core.repository.UserRepository;
 import com.ss.eastcoderbank.core.transferdto.CreditCardDto;
+import com.ss.eastcoderbank.core.transferdto.UserDto;
 import com.ss.eastcoderbank.core.transfermapper.CardMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,8 +39,14 @@ public class CreditService {
         return creditRepository.findAll();
     }
 
-    public Page<CreditCardDto> getCreditCards(Integer pageNumber, Integer pageSize) {
-        return creditRepository.findAll(PageRequest.of(pageNumber, pageSize)).map(card -> cardMapper.mapToDto(card));
+    public Page<CreditCardDto> getCreditCards(Integer pageNumber, Integer pageSize, boolean asc, String sort) {
+        Page<CreditCardDto> req;
+        if (sort != null) {
+            req = creditRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by(asc ? Sort.Direction.ASC : Sort.Direction.DESC, sort))).map(card -> cardMapper.mapToDto(card));
+        } else {
+            req = creditRepository.findAll(PageRequest.of(pageNumber, pageSize)).map(card -> cardMapper.mapToDto(card));
+        }
+        return req;
     }
 
     public List<CreditCard> getCreditCardsByUser(List<Integer> users){

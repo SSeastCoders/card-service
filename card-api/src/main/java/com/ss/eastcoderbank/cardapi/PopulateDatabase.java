@@ -2,6 +2,7 @@ package com.ss.eastcoderbank.cardapi;
 
 import com.ss.eastcoderbank.core.model.card.CardType;
 import com.ss.eastcoderbank.core.model.card.CreditCard;
+import com.ss.eastcoderbank.core.model.card.SwipeGenerator;
 import com.ss.eastcoderbank.core.model.user.Credential;
 import com.ss.eastcoderbank.core.model.user.User;
 import com.ss.eastcoderbank.core.model.user.UserRole;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 @Profile("h2")
@@ -82,22 +85,28 @@ public class PopulateDatabase implements ApplicationRunner {
                 });
         //(1, TRUE, 'Boston', 'MA', '41 Bothwell Road', 02135, 'tempPass', 'hazel', '2021-07-07', '1996-06-28', 'hazel.baker-harvey@smoothstack.com', 'Hazel', 'Baker-Harvey', '(206) 557-0334', 1);
 
-        CreditCard creditCard = new CreditCard();
-        creditCard.setAvailableCredit(100F);
-        creditCard.setDueDate(LocalDate.now());
-        creditCard.setBalance(100F);
-        creditCard.setCardType(CardType.CREDIT);
-        creditCard.setMinDue(25f);
-        creditCard.setExpDate(LocalDate.now());
-        creditCard.setInterestRate(0.01);
-        creditCard.setCvv("433");
-        creditCard.setSwipe("2893742983742944");
-        creditCard.setOpenDate(LocalDate.now());
-        creditCard.setNickName("Defbrfj");
-        creditCard.setCreditLimit(1020F);
-        creditCard.setActiveStatus(true);
+        Random r = new Random();
 
-        creditRepository.save(creditCard);
+        IntStream.rangeClosed(1, 30).forEach(i -> {
+
+            CreditCard creditCard = new CreditCard();
+            creditCard.setUsers(List.of(user,userCust));
+            creditCard.setAvailableCredit(100F);
+            creditCard.setDueDate(LocalDate.now());
+            creditCard.setBalance(100F);
+            creditCard.setCardType(CardType.CREDIT);
+            creditCard.setMinDue(25f);
+            creditCard.setExpDate(LocalDate.now());
+            creditCard.setInterestRate(0.01);
+            creditCard.setCvv("" + r.nextInt(10) + r.nextInt(10) + r.nextInt(10));
+            creditCard.setSwipe(new SwipeGenerator().randomSwipe(16,4,' '));
+            creditCard.setOpenDate(LocalDate.now());
+            creditCard.setNickName("Credit Dummy " + i);
+            creditCard.setCreditLimit(1020F);
+            creditCard.setActiveStatus(true);
+
+            creditRepository.save(creditCard);
+        });
 
     }
 }
