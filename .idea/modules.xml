@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/card-api/card-api.iml" filepath="$PROJECT_DIR$/card-api/card-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/card-service.iml" filepath="$PROJECT_DIR$/.idea/card-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cardservice.iml" filepath="$PROJECT_DIR$/cardservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core-library/core-library.iml" filepath="$PROJECT_DIR$/core-library/core-library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/card-api/users-api.iml" filepath="$PROJECT_DIR$/card-api/users-api.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for jwt.secret."
+    },
+    {
+      "name": "twilio.sid",
+      "type": "java.lang.String",
+      "description": "Description for twilio.sid."
+    },
+    {
+      "name": "twilio.token",
+      "type": "java.lang.String",
+      "description": "Description for twilio.token."
+    }
+  ]
+}
