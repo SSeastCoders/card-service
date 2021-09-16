@@ -21,17 +21,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-@Profile("h2")
+@Profile({"dev"})
 @Component
 @AllArgsConstructor
 public class PopulateDatabase implements ApplicationRunner {
 
-
+//
     private UserRepository userRepository;
     private UserRoleRepository userRoleRepository;
     private CreditRepository creditRepository;
-
-
+//
+//
     public void run(ApplicationArguments args) {
         UserRole userRoleAdmin = new UserRole();
         userRoleAdmin.setId(1);
@@ -40,9 +40,9 @@ public class PopulateDatabase implements ApplicationRunner {
         UserRole userRoleCust = new UserRole();
         userRoleCust.setId(2);
         userRoleCust.setTitle("Customer");
-
-        userRoleRepository.saveAll(Arrays.asList(userRoleAdmin, userRoleCust));
-
+//
+//        userRoleRepository.saveAll(Arrays.asList(userRoleAdmin, userRoleCust));
+//
         User user = new User();
         user.setActiveStatus(true);
         user.setId(1);
@@ -55,8 +55,8 @@ public class PopulateDatabase implements ApplicationRunner {
         user.setCredential(cred);
         user.setRole(userRoleAdmin);
 
-        userRepository.save(user);
-
+//        userRepository.save(user);
+//
         User userCust = new User();
         userCust.setActiveStatus(true);
         userCust.setId(2);
@@ -67,23 +67,23 @@ public class PopulateDatabase implements ApplicationRunner {
         credCust.setPassword("customer");
         userCust.setCredential(credCust);
         userCust.setRole(userRoleCust);
+//
+//        userRepository.save(userCust);
 
-        userRepository.save(userCust);
-
-        IntStream.rangeClosed(1, 30).forEach(i -> {
-                    User user2 = new User();
-                    user2.setActiveStatus(true);
-                    user2.setId(i+2);
-                    user2.setEmail("user" + i + "@smoothstack.com");
-                    user2.setFirstName("firstName" + i);
-                    user2.setLastName("lastName" + i);
-                    Credential cred2 = new Credential();
-                    cred2.setUsername("user" + i);
-                    cred2.setPassword("hazelasd");
-                    user2.setCredential(cred2);
-                    user2.setRole(userRoleAdmin);
-                    userRepository.save(user2);
-                });
+//        IntStream.rangeClosed(1, 30).forEach(i -> {
+//                    User user2 = new User();
+//                    user2.setActiveStatus(true);
+//                    user2.setId(i+2);
+//                    user2.setEmail("user" + i + "@smoothstack.com");
+//                    user2.setFirstName("firstName" + i);
+//                    user2.setLastName("lastName" + i);
+//                    Credential cred2 = new Credential();
+//                    cred2.setUsername("user" + i);
+//                    cred2.setPassword("hazelasd");
+//                    user2.setCredential(cred2);
+//                    user2.setRole(userRoleAdmin);
+//                    userRepository.save(user2);
+//                });
         //(1, TRUE, 'Boston', 'MA', '41 Bothwell Road', 02135, 'tempPass', 'hazel', '2021-07-07', '1996-06-28', 'hazel.baker-harvey@smoothstack.com', 'Hazel', 'Baker-Harvey', '(206) 557-0334', 1);
 
         Random r = new Random();
