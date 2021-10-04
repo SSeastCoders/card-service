@@ -58,14 +58,14 @@ pipeline {
 
             steps {
 
-                echo "Fetching CloudFormation template 'deploy-stack.yml'..."
+                echo "Fetching CloudFormation template 'deploystack.yml'..."
                 sh "wget https://raw.githubusercontent.com/${organizationName}/${serviceName}/${branch}/deploy-stack.yml"
                 echo "Deploying ${serviceName}..."
 
                 sh '''
                     aws cloudformation deploy \
                     --stack-name ${serviceName}-stack \
-                    --template-file deploy-stack.yml \
+                    --template-file deploystack.yml \
                     --parameter-overrides \
                         AppEnv=${appEnv} \
                         AppName=${organizationName} \
