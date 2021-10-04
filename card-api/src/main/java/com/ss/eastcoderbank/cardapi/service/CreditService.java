@@ -9,7 +9,6 @@ import com.ss.eastcoderbank.core.model.user.User;
 import com.ss.eastcoderbank.core.repository.CreditRepository;
 import com.ss.eastcoderbank.core.repository.UserRepository;
 import com.ss.eastcoderbank.core.transferdto.CreditCardDto;
-import com.ss.eastcoderbank.core.transferdto.UserDto;
 import com.ss.eastcoderbank.core.transfermapper.CardMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
