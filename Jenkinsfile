@@ -45,11 +45,11 @@ pipeline {
 
                         docker context use default
 
-                        docker build -t ${awsID}.dkr.ecr.us-east-1.amazonaws.com/${serviceName}:${commitIDShort} .
-                        docker push ${awsID}.dkr.ecr.us-east-1.amazonaws.com/${serviceName}:${commitIDShort}
+                        docker build -t ${awsID}.dkr.ecr.${awsRegion}.amazonaws.com/${serviceName}:${commitIDShort} .
+                        docker push ${awsID}.dkr.ecr.${awsRegion}.amazonaws.com/${serviceName}:${commitIDShort}
 
-                        docker build -t ${awsID}.dkr.ecr.us-east-1.amazonaws.com/${serviceName}:latest .
-                        docker push ${awsID}.dkr.ecr.us-east-1.amazonaws.com/${serviceName}:latest
+                        docker build -t ${awsID}.dkr.ecr.${awsRegion}.amazonaws.com/${serviceName}:latest .
+                        docker push ${awsID}.dkr.ecr.${awsRegion}.amazonaws.com/${serviceName}:latest
                     '''
                 }
             }
