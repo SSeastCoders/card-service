@@ -2,7 +2,7 @@
 pipeline {
     agent any
     environment {
-        serviceName = 'dev-card-service'
+        serviceName = 'dev-card'
         awsRegion = 'us-east-2'
         mavenProfile = 'dev'
         commitIDShort = sh(returnStdout: true, script: "git rev-parse --short HEAD")
