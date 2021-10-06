@@ -76,7 +76,8 @@ pipeline {
                         ServicePort=${servicePort} \
                         HealthPath=${healthPath} \
                     --capabilities CAPABILITY_NAMED_IAM \
-                    --no-fail-on-empty-changeset
+                    --no-fail-on-empty-changeset \
+                    --region ${awsRegion}
                 '''
             }
         }
