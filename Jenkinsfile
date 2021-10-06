@@ -3,6 +3,7 @@ pipeline {
     agent any
     environment {
         serviceName = 'dev-card'
+        githubServiceName = 'card-service'
         awsRegion = 'us-east-2'
         mavenProfile = 'dev'
         commitIDShort = sh(returnStdout: true, script: "git rev-parse --short HEAD")
@@ -60,7 +61,7 @@ pipeline {
             steps {
 
                 echo "Fetching CloudFormation template 'deploystack.yml'..."
-                sh "wget https://raw.githubusercontent.com/${organizationName}/${serviceName}/${branch}/deploystack.yml"
+                sh "wget https://raw.githubusercontent.com/${organizationName}/${githubServiceName}/${appEnv}/deploystack.yml"
                 echo "Deploying ${serviceName}..."
 
                 sh '''
