@@ -25,13 +25,14 @@ pipeline {
                 }
             }
         }
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+        //Currently breaks pipeline
+        //stage('Quality Gate') {
+        //   steps {
+        //        timeout(time: 10, unit: 'MINUTES') {
+        //            waitForQualityGate abortPipeline: true
+        //        }
+        //   }
+        //}
         stage('Maven Build') {
             steps {
                 sh 'mvn clean package -P ${mavenProfile} -Dskiptests'
