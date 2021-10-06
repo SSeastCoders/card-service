@@ -2,13 +2,14 @@
 pipeline {
     agent any
     environment {
-        serviceName = 'card-service'
+        serviceName = 'dev-card-service'
         awsRegion = 'us-east-2'
         mavenProfile = 'dev'
         commitIDShort = sh(returnStdout: true, script: "git rev-parse --short HEAD")
         organizationName = 'SSEastCoders'
         appEnv = 'jtdo'
         servicePort = 8225
+        healthPath = '/credit-cards/health'
     }
     stages {
         stage('Clean and Test') {
@@ -71,6 +72,7 @@ pipeline {
                         AppName=${organizationName} \
                         ServiceName=${serviceName} \
                         ServicePort=${servicePort} \
+                        HealthPath=${healthPath} \
                     --capabilities CAPABILITY_NAMED_IAM \
                     --no-fail-on-empty-changeset
                 '''
