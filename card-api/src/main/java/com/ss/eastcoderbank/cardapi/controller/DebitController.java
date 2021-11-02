@@ -7,17 +7,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DebitController {
 
-
-    //getDebitCards()
-    //getDebitCardByUser
-    //getDebitCardById
-    //getDebitCardByNumber
-    //getDebitCardBy???
-    //makenewDebitcard
-    //deactiveate card
-    //make a payement
-    //update card
-    //
-
-
 }

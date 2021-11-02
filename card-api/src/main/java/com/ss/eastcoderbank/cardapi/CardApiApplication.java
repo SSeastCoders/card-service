@@ -21,7 +21,6 @@ import java.util.Arrays;
 @SpringBootApplication(scanBasePackages = "com.ss.eastcoderbank.*", exclude = {SecurityAutoConfiguration.class})
 @EntityScan(basePackages = "com.ss.eastcoderbank.core.model")
 @EnableJpaRepositories(basePackages = "com.ss.eastcoderbank.*")
-//@SpringBootApplication(scanBasePackages = "com.ss.eastcoderbank.*", exclude = {SecurityAutoConfiguration.class})
 public class CardApiApplication {
 
     public static void main(String[] args) {

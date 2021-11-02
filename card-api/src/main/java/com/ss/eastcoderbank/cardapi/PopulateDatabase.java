@@ -16,12 +16,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-@Profile({"h2"})
+@Profile({"dev"})
 @Component
 @AllArgsConstructor
 public class PopulateDatabase implements ApplicationRunner {
@@ -86,19 +85,19 @@ public class PopulateDatabase implements ApplicationRunner {
         userRepository.save(userCust);
 
         IntStream.rangeClosed(1, 30).forEach(i -> {
-                    User user2 = new User();
-                    user2.setActiveStatus(true);
-                    user2.setId(i+2);
-                    user2.setEmail("user" + i + "@smoothstack.com");
-                    user2.setFirstName("firstName" + i);
-                    user2.setLastName("lastName" + i);
-                    Credential cred2 = new Credential();
-                    cred2.setUsername("user" + i);
-                    cred2.setPassword("hazelasd");
-                    user2.setCredential(cred2);
-                    user2.setRole(userRoleAdmin);
-                    userRepository.save(user2);
-                });
+            User user2 = new User();
+            user2.setActiveStatus(true);
+            user2.setId(i + 2);
+            user2.setEmail("user" + i + "@smoothstack.com");
+            user2.setFirstName("firstName" + i);
+            user2.setLastName("lastName" + i);
+            Credential cred2 = new Credential();
+            cred2.setUsername("user" + i);
+            cred2.setPassword("hazelasd");
+            user2.setCredential(cred2);
+            user2.setRole(userRoleAdmin);
+            userRepository.save(user2);
+        });
         //(1, TRUE, 'Boston', 'MA', '41 Bothwell Road', 02135, 'tempPass', 'hazel', '2021-07-07', '1996-06-28', 'hazel.baker-harvey@smoothstack.com', 'Hazel', 'Baker-Harvey', '(206) 557-0334', 1);
 
         Random r = new Random();
@@ -106,7 +105,7 @@ public class PopulateDatabase implements ApplicationRunner {
         IntStream.rangeClosed(1, 30).forEach(i -> {
 
             CreditCard creditCard = new CreditCard();
-            creditCard.setUsers(List.of(user,userCust));
+            creditCard.setUsers(List.of(user, userCust));
             creditCard.setAvailableCredit(100F);
             creditCard.setDueDate(LocalDate.now());
             creditCard.setBalance(100F);
@@ -115,7 +114,7 @@ public class PopulateDatabase implements ApplicationRunner {
             creditCard.setExpDate(LocalDate.now());
             creditCard.setInterestRate(0.01);
             creditCard.setCvv("" + r.nextInt(10) + r.nextInt(10) + r.nextInt(10));
-            creditCard.setSwipe(new SwipeGenerator().randomSwipe(16,4,' '));
+            creditCard.setSwipe(new SwipeGenerator().randomSwipe(16, 4, ' '));
             creditCard.setOpenDate(LocalDate.now());
             creditCard.setNickName("Credit Dummy " + i);
             creditCard.setCreditLimit(1020F);
