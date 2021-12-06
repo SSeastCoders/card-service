@@ -13,6 +13,7 @@ import com.ss.eastcoderbank.core.transfermapper.CardMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +56,12 @@ public class CreditService {
 
     public CreditCard getCreditCardById(Integer id){
         return creditRepository.findById(id).orElseThrow(CardNotFoundException::new);
+    }
+
+    public Page<CreditCardDto> getCardsByFilter(Integer pageNumber, Integer pageSize, boolean asc, String sort, CardOptions options) {
+        Pageable pageable = (sort != null) ? PageRequest.of(pageNumber, pageSize, Sort.by(asc ? Sort.Direction.ASC: Sort.Direction.DESC, sort)) : PageRequest.of(pageNumber, pageSize);
+        return creditRepository.findCreditCardByFilter(options.getNickName(), options.getFromDate(), options.getToDate(), options.getFromAmount(),
+                options.getToAmount(), options.getActiveStatus(), pageable).map(creditCard -> cardMapper.mapToDto(creditCard));
     }
 
     public CreditCard createCard(CreateCreditDto card){

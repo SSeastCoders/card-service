@@ -1,12 +1,13 @@
 package com.ss.eastcoderbank.cardapi.controller;
 
 import com.ss.eastcoderbank.cardapi.dto.CreateCreditDto;
+import com.ss.eastcoderbank.cardapi.dto.CreditCardDto;
+import com.ss.eastcoderbank.cardapi.service.CardOptions;
 import com.ss.eastcoderbank.cardapi.service.CreditService;
 import com.ss.eastcoderbank.core.model.card.CreditCard;
-import com.ss.eastcoderbank.core.transferdto.CreditCardDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin
@@ -36,9 +38,27 @@ public class CreditController {
     }
 
     //getCreditCards()
-    @GetMapping()
-    public Page<CreditCardDto> getCreditCards(@RequestParam(name="page") Integer pageNumber, @RequestParam(name="size") Integer pageSize, @RequestParam(value="asc", required = false) boolean asc, Pageable page, String sort) {
-        return creditService.getCreditCards(pageNumber, pageSize, asc, sort);
+//    @GetMapping()
+//    public Page<CreditCardDto> getCreditCards(@RequestParam(name="page") Integer pageNumber, @RequestParam(name="size") Integer pageSize, @RequestParam(value="asc", required = false) boolean asc, Pageable page, String sort) {
+//        return creditService.getCreditCards(pageNumber, pageSize, asc, sort);
+//    }
+    @GetMapping
+    public ResponseEntity<Page<CreditCardDto>> getCards(
+            @RequestParam Integer page,
+            @RequestParam Integer size,
+            @RequestParam(required = false) boolean asc,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false, defaultValue = "") String nickname,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false) LocalDate fromDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            @RequestParam(required = false) LocalDate toDate,
+            @RequestParam(required = false) Float fromAmount,
+            @RequestParam(required = false) Float toAmount,
+            @RequestParam(required = false) Boolean status
+    ) {
+        CardOptions options = new CardOptions(nickname, fromDate, toDate, fromAmount, toAmount, status);
+        return new ResponseEntity(creditService.getCardsByFilter(page, size, asc, sort, options), HttpStatus.OK);
     }
 
     //getCreditCardByUser
